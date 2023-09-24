@@ -17,5 +17,5 @@ export interface AccountVM {
 export const createEmptyAccount = (): AccountVM => ({
   avalibleBalance: 0,
   iban: '',
-   name: ''
+  name: ''
 });

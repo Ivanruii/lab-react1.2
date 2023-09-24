@@ -1,60 +1,73 @@
 .root {
-    max-width: 1200px;
+    max-width: 400px;
     margin: 0 auto;
-    padding: 5px;
-}
-
-.data-cell {
-    font-size: 16px;
-    padding: 15px;
-    color: #232c3b;
-    align-self: center;
-}
-
-.data-cell a {
-    text-decoration: underline;
-    color: #232c3b;
-}
-
-.select-container {
-    width: 200px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.select {
-    font-size: 13px;
-    border-radius: 10px;
-    padding: 8px 10px;
-    width: 90%;
-    cursor: pointer;
-}
-
-.input {
-    width: 200px;
-}
-
-.select>option {
-    font-size: 15px;
+    padding: 20px;
 }
 
 .header-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    text-align: center;
     padding-bottom: 15px;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
     border-bottom: 5px solid #232c3b;
 }
 
 .header-container h1 {
     font-size: 2.2rem;
     font-weight: 300;
+    margin: 0;
 }
 
-.display-flex {
+.dataCell {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    padding: 10px;
+    color: #232c3b;
+    margin-bottom: 15px;
+}
+
+.dataCell label {
+    font-weight: bold;
+}
+
+.input {
+    width: 100%;
+}
+
+.selectContainer {
+    display: flex;
+    flex-direction: column;
     align-items: center;
+    margin-top: 10px;
+}
+
+.select {
+    font-size: 13px;
+    border-radius: 10px;
+    padding: 8px 10px;
+    width: 100%;
+    cursor: pointer;
+}
+
+.button {
+    width: 100%;
+    background-color: #232c3b;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: #1a2230;
+}
+
+.alert-box {
+    text-align: center;
+    border-radius: 10px;
+    margin: 20px;
+    padding: 5px;
+    border: 2px solid rgba(0, 0, 0, 0.633);
+    color: white;
+    background-color: rgb(239, 121, 113);
 }

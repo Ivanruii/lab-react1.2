@@ -1,5 +1,4 @@
 export interface Account {
-    type: string;
-    name: string;
-  }
-  
+  type: string;
+  name: string;
+}

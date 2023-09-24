@@ -1,30 +1,31 @@
 import React from 'react';
 import classes from './create-account.component.module.css';
+import { Account } from '../api';
+import { mapAccountFromVMToApi } from '../account.mapper';
+import { createEmptyAccount } from '../account.vm';
 
-const SAVINGS_ACCOUNT = "";
-const SHARE_ACCOUNT = "";
-const EXPENSES_PER_MONTH_ACCOUNT = "";
+const SAVINGS_ACCOUNT = "1";
+const SHARE_ACCOUNT = "2";
+const EXPENSES_PER_MONTH_ACCOUNT = "3";
 
 interface Props {
   onCreateAccount: (account: Account) => void;
 }
 
-export interface Account {
-  type: string;
-  name: string;
-}
-
 export const CreateAccount: React.FC<Props> = ({ onCreateAccount }) => {
-  const [account, setAccount] = React.useState<Account>({ type: '', name: '' });
+  const [account, setAccount] = React.useState<Account>(createEmptyAccount());
+  const [errorMessage, setErrorMessage] = React.useState<string>('');
+  const [successMessage, setSuccessMessage] = React.useState<string>('');
 
   const handleSelectedOptionChange = (
     e: React.ChangeEvent<HTMLSelectElement>
   ): void => {
-    switch (e.target.value) {
-      case SAVINGS_ACCOUNT:
-        setAccount((prevAccount) => ({ ...prevAccount, type: SAVINGS_ACCOUNT }));
-        break;
-    }
+    const selectedType = e.target.value;
+
+    setAccount((account) => ({
+      ...account,
+      type: selectedType,
+    }));
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -34,17 +35,24 @@ export const CreateAccount: React.FC<Props> = ({ onCreateAccount }) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onCreateAccount(account);
+
+    if (!account.name || !account.type) {
+      setErrorMessage("Por favor, complete todos los campos.");
+    } else {
+      onCreateAccount(mapAccountFromVMToApi(account));
+      setSuccessMessage("La cuenta se creó con éxito.");
+      setAccount(createEmptyAccount());
+    }
   };
 
   return (
     <div className={classes.root}>
       <div className={classes.headerContainer}>
-        <h1>Create Account</h1>
+        <h1>Crear Cuenta</h1>
       </div>
       <form onSubmit={handleSubmit}>
         <div className={classes.dataCell}>
-          <div className={`${classes.displayFlex} ${classes.input}`}>
+          <div className={`${classes.selectContainer} ${classes.input}`}>
             <label htmlFor="name">Nombre:</label>
             <input
               type="text"
@@ -57,8 +65,9 @@ export const CreateAccount: React.FC<Props> = ({ onCreateAccount }) => {
           </div>
         </div>
         <span className={`${classes.dataCell} ${classes.selectContainer}`}>
-          <label htmlFor="name">Tipo:</label>
+          <label htmlFor="type">Tipo:</label>
           <select
+            id="type"
             className={classes.select}
             onChange={handleSelectedOptionChange}
           >
@@ -68,9 +77,11 @@ export const CreateAccount: React.FC<Props> = ({ onCreateAccount }) => {
           </select>
         </span>
         <button type="submit" className={classes.button}>
-          Create
+          Crear
         </button>
       </form>
+      {errorMessage && <div className={classes.alertBox}>{errorMessage}</div>}
+      {successMessage && <div className={classes.alertBox}>{successMessage}</div>}
     </div>
   );
 };
